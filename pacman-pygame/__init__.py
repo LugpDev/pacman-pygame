@@ -1,5 +1,6 @@
 from pygame import *
 import sys
+
 from pacman import (
     create_pacman,
     handle_pacman_input,
@@ -8,10 +9,11 @@ from pacman import (
 )
 
 init()
-screen = display.set_mode((800, 600))
+screen_width, screen_height = 800, 600
+screen = display.set_mode((screen_width, screen_height))
 clock = time.Clock()
 
-pacman = create_pacman(100, 100, 1)
+pacman = create_pacman(100, 100, 2, screen_width, screen_height)
 
 while True:
     screen.fill((0, 0, 0))

@@ -2,7 +2,7 @@ from pygame import *
 from scripts.animations import load_animations, show_animation
 
 
-def create_pacman(x, y, speed):
+def create_pacman(x, y, speed, screen_width, screen_height):
     image_path = "../assets/pacman/pacman"
     suffix = ".png"
 
@@ -17,6 +17,8 @@ def create_pacman(x, y, speed):
         "images": load_animations(image_path, suffix, 3, 0),
         "frame_index": 0,
         "last_update": time.get_ticks(),
+        "screen_width": screen_width,
+        "screen_height": screen_height,
     }
 
 
@@ -43,14 +45,24 @@ def handle_pacman_input(pacman, key):
 def update_pacman(pacman):
     pacman = pacman.copy()
     angle = pacman["angle"]
+    speed = pacman["speed"]
+
     if angle == 0:
-        pacman["x"] += pacman["speed"]
+        if pacman["x"] >= pacman["screen_width"]:
+            pacman["x"] = 0
+        pacman["x"] += speed
     elif angle == 90:
-        pacman["y"] -= pacman["speed"]
+        if pacman["y"] <= 0:
+            pacman["y"] = pacman["screen_height"]
+        pacman["y"] -= speed
     elif angle == 180:
-        pacman["x"] -= pacman["speed"]
+        if pacman["x"] <= 0:
+            pacman["x"] = 800
+        pacman["x"] -= speed
     elif angle == 270:
-        pacman["y"] += pacman["speed"]
+        if pacman["y"] >= pacman["screen_height"]:
+            pacman["y"] = 0
+        pacman["y"] += speed
 
     now = time.get_ticks()
     if now - pacman["last_update"] > 1000 // pacman["anim_fps"]:
