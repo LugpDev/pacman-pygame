@@ -1,5 +1,3 @@
-import random
-
 from pygame import *
 import sys
 
@@ -10,6 +8,9 @@ init()
 screen = display.set_mode((800, 600))
 
 angle = 0
+x_position, y_position = 100, 100
+SPEED = 0.5
+
 while True:
     screen.fill((0, 0, 0))
     for e in event.get():
@@ -18,13 +19,23 @@ while True:
             if e.key == K_w:
                 angle = 90
             elif e.key == K_s:
-                angle = -90
+                angle = 270
             elif e.key == K_a:
                 angle = 180
             elif e.key == K_d:
                 angle = 0
 
     images = load_animations("../assets/pacman/pacman", ".png", 3, angle)
-    show_animation(images, 5, screen, 100, 100)
+
+    if angle == 0:
+        x_position += SPEED
+    elif angle == 90:
+        y_position -= SPEED
+    elif angle == 180:
+        x_position -= SPEED
+    elif angle == 270:
+        y_position += SPEED
+
+    show_animation(images, 5, screen, x_position, y_position)
 
     display.flip()
