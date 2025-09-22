@@ -17,14 +17,14 @@ def create_pacman(x, y, speed, image_path, anim_ext):
 
 def handle_pacman_input(pacman, key):
     angle = pacman["angle"]
-    if key == K_w:
-        angle = 90
-    elif key == K_s:
-        angle = 270
-    elif key == K_a:
-        angle = 180
-    elif key == K_d:
+    if key == K_RIGHT:
         angle = 0
+    elif key == K_UP:
+        angle = 90
+    elif key == K_LEFT:
+        angle = 180
+    elif key == K_DOWN:
+        angle = 270
 
     if angle != pacman["angle"]:
         pacman = pacman.copy()
