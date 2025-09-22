@@ -6,10 +6,11 @@ from scripts.animations import show_animation
 
 init()
 screen = display.set_mode((800, 600))
+clock = time.Clock()
 
 angle = 0
 x_position, y_position = 100, 100
-SPEED = 0.5
+SPEED = 1
 
 while True:
     screen.fill((0, 0, 0))
@@ -39,3 +40,4 @@ while True:
     show_animation(images, 5, screen, x_position, y_position)
 
     display.flip()
+    clock.tick(60)
