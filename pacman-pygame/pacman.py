@@ -1,43 +1,59 @@
 from pygame import *
-import sys
+from scripts.animations import load_animations, show_animation
 
-from scripts.animations import load_animations
-from scripts.animations import show_animation
+def create_pacman(x, y, speed, image_path, anim_ext):
+    return {
+        "x": x,
+        "y": y,
+        "speed": speed,
+        "angle": 0,
+        "image_path": image_path,
+        "anim_ext": anim_ext,
+        "anim_fps": 5,
+        "images": load_animations(image_path, anim_ext, 3, 0),
+        "frame_index": 0,
+        "last_update": time.get_ticks(),
+    }
 
-init()
-screen = display.set_mode((800, 600))
-clock = time.Clock()
+def handle_pacman_input(pacman, key):
+    angle = pacman["angle"]
+    if key == K_w:
+        angle = 90
+    elif key == K_s:
+        angle = 270
+    elif key == K_a:
+        angle = 180
+    elif key == K_d:
+        angle = 0
 
-angle = 0
-x_position, y_position = 100, 100
-SPEED = 1
+    if angle != pacman["angle"]:
+        pacman = pacman.copy()
+        pacman["angle"] = angle
+        pacman["images"] = load_animations(
+            pacman["image_path"], pacman["anim_ext"], 3, angle
+        )
+    return pacman
 
-while True:
-    screen.fill((0, 0, 0))
-    for e in event.get():
-        if e.type == QUIT: sys.exit()
-        if e.type == KEYDOWN:
-            if e.key == K_w:
-                angle = 90
-            elif e.key == K_s:
-                angle = 270
-            elif e.key == K_a:
-                angle = 180
-            elif e.key == K_d:
-                angle = 0
-
-    images = load_animations("../assets/pacman/pacman", ".png", 3, angle)
-
+def update_pacman(pacman):
+    pacman = pacman.copy()
+    angle = pacman["angle"]
     if angle == 0:
-        x_position += SPEED
+        pacman["x"] += pacman["speed"]
     elif angle == 90:
-        y_position -= SPEED
+        pacman["y"] -= pacman["speed"]
     elif angle == 180:
-        x_position -= SPEED
+        pacman["x"] -= pacman["speed"]
     elif angle == 270:
-        y_position += SPEED
+        pacman["y"] += pacman["speed"]
 
-    show_animation(images, 5, screen, x_position, y_position)
+    now = time.get_ticks()
+    if now - pacman["last_update"] > 1000 // pacman["anim_fps"]:
+        pacman["frame_index"] = (pacman["frame_index"] + 1) % len(pacman["images"])
+        pacman["last_update"] = now
+    return pacman
 
-    display.flip()
-    clock.tick(60)
+def draw_pacman(pacman, surface):
+    show_animation(
+        [pacman["images"][pacman["frame_index"]]], 1,
+        surface, pacman["x"], pacman["y"]
+    )
