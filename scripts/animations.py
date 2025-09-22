@@ -3,11 +3,12 @@ import time
 
 
 
-def load_animations(prefijo, sufijo, n):
+def load_animations(prefix, suffix, n, angle):
     images = []
     for i in range(1, n + 1):
-        name = prefijo + str(i) + sufijo
-        images.append(image.load(name))
+        name = prefix + str(i) + suffix
+        img = transform.rotate(image.load(name), angle)
+        images.append(img)
     return images
 
 
