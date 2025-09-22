@@ -1,19 +1,24 @@
 from pygame import *
 from scripts.animations import load_animations, show_animation
 
-def create_pacman(x, y, speed, image_path, anim_ext):
+
+def create_pacman(x, y, speed):
+    image_path = "../assets/pacman/pacman"
+    suffix = ".png"
+
     return {
         "x": x,
         "y": y,
         "speed": speed,
         "angle": 0,
-        "image_path": image_path,
-        "anim_ext": anim_ext,
         "anim_fps": 5,
-        "images": load_animations(image_path, anim_ext, 3, 0),
+        "image_path": image_path,
+        "suffix": suffix,
+        "images": load_animations(image_path, suffix, 3, 0),
         "frame_index": 0,
         "last_update": time.get_ticks(),
     }
+
 
 def handle_pacman_input(pacman, key):
     angle = pacman["angle"]
@@ -30,9 +35,10 @@ def handle_pacman_input(pacman, key):
         pacman = pacman.copy()
         pacman["angle"] = angle
         pacman["images"] = load_animations(
-            pacman["image_path"], pacman["anim_ext"], 3, angle
+            pacman["image_path"], pacman["suffix"], 3, angle
         )
     return pacman
+
 
 def update_pacman(pacman):
     pacman = pacman.copy()
@@ -51,6 +57,7 @@ def update_pacman(pacman):
         pacman["frame_index"] = (pacman["frame_index"] + 1) % len(pacman["images"])
         pacman["last_update"] = now
     return pacman
+
 
 def draw_pacman(pacman, surface):
     show_animation(

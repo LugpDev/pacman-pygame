@@ -11,7 +11,7 @@ init()
 screen = display.set_mode((800, 600))
 clock = time.Clock()
 
-pacman = create_pacman(x=100, y=100, speed=1, image_path="../assets/pacman/pacman", anim_ext=".png")
+pacman = create_pacman(100, 100, 1)
 
 while True:
     screen.fill((0, 0, 0))
