@@ -9,11 +9,11 @@ from pacman import (
 )
 
 init()
-screen_width, screen_height = 700, 781
-screen = display.set_mode((screen_width, screen_height))
+SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
+screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
 
-pacman = create_pacman(100, 100, 2, screen_width, screen_height)
+pacman = create_pacman(100, 100, 2, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 while True:
     screen.fill((0, 0, 0))
@@ -23,11 +23,12 @@ while True:
         elif e.type == KEYDOWN:
             pacman = handle_pacman_input(pacman, e.key)
 
-    map = transform.scale(image.load("../assets/map.png"), (screen_width, screen_height))
+    map = transform.scale(image.load("../assets/map.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(map, (0, 0))
 
-    pacman = update_pacman(pacman)
-    draw_pacman(pacman, screen)
+    if False:
+        pacman = update_pacman(pacman)
+        draw_pacman(pacman, screen)
 
     display.flip()
     clock.tick(60)
