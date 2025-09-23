@@ -42,10 +42,14 @@ def handle_pacman_input(pacman, key):
     return pacman
 
 
-def update_pacman(pacman):
+def update_pacman(pacman, playing):
     pacman = pacman.copy()
     angle = pacman["angle"]
-    speed = pacman["speed"]
+
+    if playing:
+        speed = pacman["speed"]
+    else:
+        speed = 0
 
     if angle == 0:
         if pacman["x"] >= pacman["screen_width"]:
@@ -71,8 +75,12 @@ def update_pacman(pacman):
     return pacman
 
 
-def draw_pacman(pacman, surface):
-    show_animation(
-        [pacman["images"][pacman["frame_index"]]], 1,
-        surface, pacman["x"], pacman["y"]
-    )
+def draw_pacman(pacman, surface, playing):
+    if playing:
+        show_animation(
+            [pacman["images"][pacman["frame_index"]]], 1,
+            surface, pacman["x"], pacman["y"]
+        )
+    else:
+        surface.blit(pacman["images"][2], (pacman["x"], pacman["y"]))
+
