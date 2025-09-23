@@ -57,7 +57,7 @@ def update_pacman(pacman):
         pacman["y"] -= speed
     elif angle == 180:
         if pacman["x"] <= 0:
-            pacman["x"] = 800
+            pacman["x"] = pacman["screen_width"]
         pacman["x"] -= speed
     elif angle == 270:
         if pacman["y"] >= pacman["screen_height"]:
