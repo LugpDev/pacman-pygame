@@ -7,17 +7,17 @@ from pacman import (
     update_pacman,
     draw_pacman,
 )
+from scripts.ui import initialize_ui, ui_controller
 
 init()
 SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
+ui_font = initialize_ui()
 
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 playing = False
-
-myFont = font.SysFont('menlo', 30)
 
 while True:
     screen.fill((0, 0, 0))
@@ -36,9 +36,7 @@ while True:
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
 
-    if not playing:
-        texto = myFont.render("Press space to start playing...", True, (255, 255, 255))
-        screen.blit(texto, (100, 350))
+    ui_controller(ui_font, screen, playing)
 
     display.flip()
     clock.tick(60)
