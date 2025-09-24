@@ -82,5 +82,5 @@ def draw_pacman(pacman, surface, playing):
             surface, pacman["x"], pacman["y"]
         )
     else:
-        surface.blit(pacman["images"][2], (pacman["x"], pacman["y"]))
+        surface.blit(pacman["images"][0], (pacman["x"], pacman["y"]))
 

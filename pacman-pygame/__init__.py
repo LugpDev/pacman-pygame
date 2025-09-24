@@ -13,9 +13,12 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
 
-pacman = create_pacman(100, 100, 2, SCREEN_WIDTH, SCREEN_HEIGHT)
+pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 playing = False
+lost = False
+
+myFont = font.SysFont('menlo', 30)
 
 while True:
     screen.fill((0, 0, 0))
@@ -23,8 +26,8 @@ while True:
         if e.type == QUIT:
             sys.exit()
         elif e.type == KEYDOWN:
-            if e.key == K_SPACE:
-                playing = not playing
+            if not playing and K_SPACE:
+                playing = True
             elif playing:
                 pacman = handle_pacman_input(pacman, e.key)
 
@@ -33,6 +36,10 @@ while True:
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
+
+    if not playing and not lost:
+        texto = myFont.render("Press space to start playing...", True, (255, 255, 255))
+        screen.blit(texto, (100, 350))
 
     display.flip()
     clock.tick(60)
