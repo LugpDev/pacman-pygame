@@ -37,6 +37,9 @@ while True:
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
 
+    for obstacle in obstacles:
+        draw.rect(screen, (255, 0,0), obstacle, 1)
+
     ui_controller(ui_font, screen, playing)
 
     display.flip()
