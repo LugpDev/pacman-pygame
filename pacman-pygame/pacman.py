@@ -1,7 +1,7 @@
 from pygame import *
 from scripts.animations import load_animations, show_animation
+from scripts.check_collision import check_collision
 
-PACMAN_SIZE = 30
 
 def create_pacman(x, y, speed, screen_width, screen_height, obstacles):
     image_path = "../assets/pacman/pacman"
@@ -56,52 +56,18 @@ def update_pacman(pacman, playing):
     if angle == 0:
         if pacman["x"] >= pacman["screen_width"]:
             pacman["x"] = 0
-        else:
-            collided = False
-            for obstacle in pacman["obstacles"]:
-                collided_y = (pacman["y"]) in range(obstacle[1], obstacle[3])
-                collided_x = (pacman["x"]) + PACMAN_SIZE + speed in range(obstacle[0], obstacle[2])
-
-                if collided_y and collided_x:
-                    collided = True
-                    break
-            if not collided:
-                pacman["x"] += speed
+        elif not check_collision(pacman):
+            pacman["x"] += speed
     elif angle == 90:
-        collided = False
-        for obstacle in pacman["obstacles"]:
-            collided_y = (pacman["y"] - speed) in range(obstacle[1], obstacle[3])
-            collided_x = (pacman["x"]) + 15 in range(obstacle[0], obstacle[2])
-
-            if collided_y and collided_x:
-                collided = True
-                break
-        if not collided:
+        if not check_collision(pacman):
             pacman["y"] -= speed
     elif angle == 180:
         if pacman["x"] <= 0:
             pacman["x"] = pacman["screen_width"]
-        else:
-            collided = False
-            for obstacle in pacman["obstacles"]:
-                collided_y = (pacman["y"]) in range(obstacle[1], obstacle[3])
-                collided_x = (pacman["x"]) - speed in range(obstacle[0], obstacle[2])
-
-                if collided_y and collided_x:
-                    collided = True
-                    break
-            if not collided:
-                pacman["x"] -= speed
+        elif not check_collision(pacman):
+            pacman["x"] -= speed
     elif angle == 270:
-        collided = False
-        for obstacle in pacman["obstacles"]:
-            collided_y = (pacman["y"] + speed + PACMAN_SIZE) in range(obstacle[1], obstacle[3])
-            collided_x = (pacman["x"]) + 15 in range(obstacle[0], obstacle[2])
-
-            if collided_y and collided_x:
-                collided = True
-                break
-        if not collided:
+        if not check_collision(pacman):
             pacman["y"] += speed
 
     now = time.get_ticks()
