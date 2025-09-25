@@ -2,7 +2,7 @@ from pygame import *
 from scripts.animations import load_animations, show_animation
 
 
-def create_pacman(x, y, speed, screen_width, screen_height):
+def create_pacman(x, y, speed, screen_width, screen_height, obstacles):
     image_path = "../assets/pacman/pacman"
     suffix = ".png"
 
@@ -19,6 +19,7 @@ def create_pacman(x, y, speed, screen_width, screen_height):
         "last_update": time.get_ticks(),
         "screen_width": screen_width,
         "screen_height": screen_height,
+        "obstacles": obstacles,
     }
 
 
@@ -56,17 +57,27 @@ def update_pacman(pacman, playing):
             pacman["x"] = 0
         pacman["x"] += speed
     elif angle == 90:
-        if pacman["y"] <= 0:
-            pacman["y"] = pacman["screen_height"]
-        pacman["y"] -= speed
+        collided = False
+        for obstacle in pacman["obstacles"]:
+            collided = (pacman["y"] - speed) in range(obstacle[1], obstacle[3])
+
+            if collided:
+                break
+        if not collided:
+            pacman["y"] -= speed
     elif angle == 180:
         if pacman["x"] <= 0:
             pacman["x"] = pacman["screen_width"]
         pacman["x"] -= speed
     elif angle == 270:
-        if pacman["y"] >= pacman["screen_height"]:
-            pacman["y"] = 0
-        pacman["y"] += speed
+        collided = False
+        for obstacle in pacman["obstacles"]:
+            collided = (pacman["y"] + speed + 20) in range(obstacle[1], obstacle[3])
+
+            if collided:
+                break
+        if not collided:
+            pacman["y"] += speed
 
     now = time.get_ticks()
     if now - pacman["last_update"] > 1000 // pacman["anim_fps"]:
@@ -83,4 +94,3 @@ def draw_pacman(pacman, surface, playing):
         )
     else:
         surface.blit(pacman["images"][0], (pacman["x"], pacman["y"]))
-

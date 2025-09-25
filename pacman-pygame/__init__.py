@@ -7,6 +7,7 @@ from pacman import (
     update_pacman,
     draw_pacman,
 )
+from scripts.obstacles import initialize_obstacles
 from scripts.ui import initialize_ui, ui_controller
 
 init()
@@ -14,8 +15,8 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
 ui_font = initialize_ui()
-
-pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT)
+obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
+pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
 
 playing = False
 
