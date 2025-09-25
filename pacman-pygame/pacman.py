@@ -56,7 +56,17 @@ def update_pacman(pacman, playing):
     if angle == 0:
         if pacman["x"] >= pacman["screen_width"]:
             pacman["x"] = 0
-        pacman["x"] += speed
+        else:
+            collided = False
+            for obstacle in pacman["obstacles"]:
+                collided_y = (pacman["y"]) in range(obstacle[1], obstacle[3])
+                collided_x = (pacman["x"]) + PACMAN_SIZE + speed in range(obstacle[0], obstacle[2])
+
+                if collided_y and collided_x:
+                    collided = True
+                    break
+            if not collided:
+                pacman["x"] += speed
     elif angle == 90:
         collided = False
         for obstacle in pacman["obstacles"]:
