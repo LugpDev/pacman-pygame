@@ -8,7 +8,7 @@ from pacman import (
     draw_pacman,
 )
 from scripts.obstacles import initialize_obstacles
-from scripts.powers import initialize_powers
+from scripts.powers import initialize_powers, power_collision
 from scripts.ui import initialize_ui, ui_controller
 
 init()
@@ -37,13 +37,16 @@ while True:
     screen.blit(map, (0, 0))
 
     for power in powers["items"]:
-        screen.blit(powers["image"], power["coords"])
+        if not power["used"]:
+            screen.blit(powers["image"], power["coords"])
+
+        power_collision(powers, pacman["x"], pacman["y"])
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
 
     for obstacle in obstacles:
-        draw.rect(screen, (255, 0,0), obstacle, 1)
+        draw.rect(screen, (255, 0, 0), obstacle, 1)
 
     ui_controller(ui_font, screen, playing)
 
