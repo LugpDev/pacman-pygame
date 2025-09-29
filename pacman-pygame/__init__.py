@@ -8,6 +8,7 @@ from pacman import (
     draw_pacman,
 )
 from scripts.obstacles import initialize_obstacles
+from scripts.powers import initialize_powers
 from scripts.ui import initialize_ui, ui_controller
 
 init()
@@ -16,6 +17,7 @@ screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
 ui_font = initialize_ui()
 obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
+powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT)
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
 
 playing = False
@@ -33,6 +35,9 @@ while True:
 
     map = transform.scale(image.load("../assets/map.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(map, (0, 0))
+
+    for power in powers["items"]:
+        screen.blit(powers["image"], power["coords"])
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
