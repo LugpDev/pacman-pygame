@@ -8,8 +8,8 @@ from pacman import (
     draw_pacman,
 )
 from scripts.obstacles import initialize_obstacles
-from scripts.powers import initialize_powers, power_collision
-from scripts.ui import initialize_ui, ui_controller
+from scripts.powers import initialize_powers, power_collision, use_power
+from scripts.ui import initialize_ui, ui_controller, show_power_ui
 
 init()
 SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
@@ -30,6 +30,10 @@ while True:
         elif e.type == KEYDOWN:
             if playing:
                 pacman = handle_pacman_input(pacman, e.key)
+
+                if e.key == K_e:
+                    use_power(powers)
+
             elif e.key == K_SPACE:
                 playing = True
 
@@ -49,6 +53,7 @@ while True:
         draw.rect(screen, (255, 0, 0), obstacle, 1)
 
     ui_controller(ui_font, screen, playing)
+    show_power_ui(screen, powers)
 
     display.flip()
     clock.tick(60)
