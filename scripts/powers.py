@@ -13,20 +13,20 @@ def initialize_powers(screen_width, screen_height):
         "has_power": False,
         "items": [
             {
-                "used": False,
-                "coords": (25, 25)
+                "x": 25,
+                "y": 25,
             },
             {
-                "used": False,
-                "coords": (screen_width - 25 - SIZE, 25)
+                "x": screen_width - 25 - SIZE,
+                "y": 25,
             },
             {
-                "used": False,
-                "coords": (25, screen_height - 25 - SIZE)
+                "x": 25,
+                "y": screen_height - 25 - SIZE,
             },
             {
-                "used": False,
-                "coords": (screen_width - 25 - SIZE, screen_height - 25 - SIZE)
+                "x": screen_width - 25 - SIZE,
+                "y": screen_height - 25 - SIZE,
             }
         ]
     }
@@ -34,14 +34,12 @@ def initialize_powers(screen_width, screen_height):
 
 def power_collision(powers, pacman_x, pacman_y):
     for power in powers["items"]:
-        x = power["coords"][0]
-        y = power["coords"][1]
+        x = power["x"]
+        y = power["y"]
 
-        if power["used"]:
-            return
 
         if pacman_x in range(x - SIZE, x + SIZE) and pacman_y in range(y - SIZE, y + SIZE):
-            power["used"] = True
+            powers["items"].remove(power)
             powers["has_power"] = True
 
 

@@ -41,16 +41,11 @@ while True:
     screen.blit(map, (0, 0))
 
     for power in powers["items"]:
-        if not power["used"]:
-            screen.blit(powers["image"], power["coords"])
-
+        screen.blit(powers["image"], (power["x"], power["y"]))
         power_collision(powers, pacman["x"], pacman["y"])
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
-
-    for obstacle in obstacles:
-        draw.rect(screen, (255, 0, 0), obstacle, 1)
 
     ui_controller(ui_font, screen, playing)
     show_power_ui(screen, powers)
