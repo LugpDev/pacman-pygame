@@ -52,5 +52,8 @@ while True:
     ui_controller(ui_font, screen, playing)
     show_power_ui(screen, powers)
 
+    for obstacle in obstacles:
+        draw.rect(screen, (255, 0, 0), obstacle, 1)
+
     display.flip()
     clock.tick(60)
