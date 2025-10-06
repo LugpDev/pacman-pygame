@@ -32,7 +32,7 @@ while True:
                 pacman = handle_pacman_input(pacman, e.key)
 
                 if e.key == K_e:
-                    use_power(powers, pacman["x"], pacman["y"], pacman["angle"])
+                    use_power(powers, pacman)
 
             elif e.key == K_SPACE:
                 playing = True

@@ -49,12 +49,12 @@ def power_collision(powers, pacman_x, pacman_y):
             powers["has_power"] = True
 
 
-def use_power(powers, x, y, angle):
+def use_power(powers, pacman):
     if powers["has_power"] and not powers["shell_data"]["active"]:
         powers["shell_data"]["active"] = True
-        powers["shell_data"]["x"] = x - 10
-        powers["shell_data"]["y"] = y - 10
-        powers["shell_data"]["angle"] = angle
+        powers["shell_data"]["x"] = pacman["x"] - 5
+        powers["shell_data"]["y"] = pacman["y"] - 10
+        powers["shell_data"]["angle"] = pacman["angle"]
         powers["has_power"] = False
 
 
