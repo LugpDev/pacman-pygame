@@ -1,6 +1,7 @@
 from pygame import *
 
 SIZE = 30
+SPEED = 5
 
 
 def initialize_powers(screen_width, screen_height):
@@ -11,6 +12,12 @@ def initialize_powers(screen_width, screen_height):
         "image": sprite,
         "shell": shell,
         "has_power": False,
+        "shell_data": {
+            "active": False,
+            "x": -1,
+            "y": -1,
+            "angle": -1,
+        },
         "items": [
             {
                 "x": 25,
@@ -37,13 +44,35 @@ def power_collision(powers, pacman_x, pacman_y):
         x = power["x"]
         y = power["y"]
 
-
         if pacman_x in range(x - SIZE, x + SIZE) and pacman_y in range(y - SIZE, y + SIZE):
             powers["items"].remove(power)
             powers["has_power"] = True
 
 
-def use_power(powers):
-    if powers["has_power"]:
-        print("using power...")
+def use_power(powers, x, y, angle):
+    if powers["has_power"] and not powers["shell_data"]["active"]:
+        powers["shell_data"]["active"] = True
+        powers["shell_data"]["x"] = x - 10
+        powers["shell_data"]["y"] = y - 10
+        powers["shell_data"]["angle"] = angle
         powers["has_power"] = False
+
+
+def update_shell(powers, screen):
+    if not powers["shell_data"]["active"]:
+        return
+
+    x = powers["shell_data"]["x"]
+    y = powers["shell_data"]["y"]
+    angle = powers["shell_data"]["angle"]
+
+    if angle == 0:
+        powers["shell_data"]["x"] += SPEED
+    elif angle == 90:
+        powers["shell_data"]["y"] -= SPEED
+    elif angle == 180:
+        powers["shell_data"]["x"] -= SPEED
+    else:
+        powers["shell_data"]["y"] += SPEED
+
+    screen.blit(transform.scale(powers["shell"], (40, 42)), (x, y))

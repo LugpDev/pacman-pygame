@@ -8,7 +8,7 @@ from pacman import (
     draw_pacman,
 )
 from scripts.obstacles import initialize_obstacles
-from scripts.powers import initialize_powers, power_collision, use_power
+from scripts.powers import initialize_powers, power_collision, use_power, update_shell
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
 
 init()
@@ -32,7 +32,7 @@ while True:
                 pacman = handle_pacman_input(pacman, e.key)
 
                 if e.key == K_e:
-                    use_power(powers)
+                    use_power(powers, pacman["x"], pacman["y"], pacman["angle"])
 
             elif e.key == K_SPACE:
                 playing = True
@@ -46,6 +46,8 @@ while True:
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
+
+    update_shell(powers, screen)
 
     ui_controller(ui_font, screen, playing)
     show_power_ui(screen, powers)
