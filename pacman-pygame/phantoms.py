@@ -45,13 +45,15 @@ def update_phantom(phantom, dest, obstacles, playing):
     if not playing:
         return phantom
 
-    if phantom["x"] < dest["x"]:
+    dest_x, dest_y = dest[0], dest[1]
+
+    if phantom["x"] < dest_x:
         phantom["x"] += phantom["speed"]
-    elif phantom["x"] > dest["x"]:
+    elif phantom["x"] > dest_x:
         phantom["x"] -= phantom["speed"]
-    elif phantom["y"] < dest["y"]:
+    elif phantom["y"] < dest_y:
         phantom["y"] += phantom["speed"]
-    elif phantom["y"] > dest["y"]:
+    elif phantom["y"] > dest_y:
         phantom["y"] -= phantom["speed"]
 
     return phantom

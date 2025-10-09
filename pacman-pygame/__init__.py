@@ -6,6 +6,8 @@ from pacman.draw_pacman import *
 from pacman.handle_pacman_input import *
 from pacman.update_pacman import *
 
+from phantoms import create_phantoms, update_phantom
+
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
@@ -18,6 +20,7 @@ ui_font = initialize_ui()
 obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
 powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT)
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
+phantoms = create_phantoms(speed=1)
 
 playing = False
 
@@ -42,6 +45,10 @@ while True:
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
         power_collision(powers, pacman["x"], pacman["y"])
+
+    for phantom in phantoms:
+        screen.blit(phantom["sprite"], (phantom["x"], phantom["y"]))
+        update_phantom(phantom, (pacman["x"], pacman["y"]), obstacles, playing)
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
