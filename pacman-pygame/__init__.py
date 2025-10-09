@@ -1,12 +1,11 @@
 from pygame import *
 import sys
 
-from pacman import (
-    create_pacman,
-    handle_pacman_input,
-    update_pacman,
-    draw_pacman,
-)
+from pacman.create_pacman import *
+from pacman.draw_pacman import *
+from pacman.handle_pacman_input import *
+from pacman.update_pacman import *
+
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
