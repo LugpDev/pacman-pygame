@@ -17,12 +17,12 @@ def update_pacman(pacman, playing):
 
     axis, direction = MOVES.get(angle, (None, None))
     if axis is not None:
-        # Teletransporte horizontal
+        # Horizontal teleport
         if angle == 0 and pacman["x"] >= pacman["screen_width"]:
             pacman["x"] = 0
         elif angle == 180 and pacman["x"] <= 0:
             pacman["x"] = pacman["screen_width"]
-        # Movimiento normal con control de colisión
+        # Movement with collision control
         elif not check_collision(
                 pacman["obstacles"], SIZE, SIZE,
                 pacman["x"], pacman["y"], pacman["speed"], angle
