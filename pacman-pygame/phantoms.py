@@ -15,29 +15,29 @@ def create_phantoms(speed):
         {
             "name": "orange",
             "sprite": load_sprite("orange"),
-            "x": 300,
-            "y": 250,
+            "x": 295,
+            "y": 270,
             "speed": speed,
         },
         {
             "name": "red",
             "sprite": load_sprite("red"),
-            "x": 350,
-            "y": 250,
+            "x": 370,
+            "y": 270,
             "speed": speed,
         },
         {
             "name": "pink",
             "sprite": load_sprite("pink"),
-            "x": 300,
-            "y": 270,
+            "x": 70,
+            "y": 350,
             "speed": speed,
         },
         {
             "name": "blue",
             "sprite": load_sprite("blue"),
-            "x": 350,
-            "y": 390,
+            "x": 600,
+            "y": 350,
             "speed": speed,
         }
     ]
