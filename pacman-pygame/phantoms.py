@@ -18,6 +18,7 @@ def create_phantoms(speed):
             "x": 295,
             "y": 270,
             "speed": speed,
+            "priority": "x"
         },
         {
             "name": "red",
@@ -25,6 +26,7 @@ def create_phantoms(speed):
             "x": 370,
             "y": 270,
             "speed": speed,
+            "priority": "y"
         },
         {
             "name": "pink",
@@ -32,6 +34,7 @@ def create_phantoms(speed):
             "x": 70,
             "y": 350,
             "speed": speed,
+            "priority": "y"
         },
         {
             "name": "blue",
@@ -39,6 +42,7 @@ def create_phantoms(speed):
             "x": 600,
             "y": 350,
             "speed": speed,
+            "priority": "x"
         }
     ]
 
@@ -59,13 +63,27 @@ def update_phantom(phantom, dest, obstacles, playing):
     left_collided = get_phantom_collision(phantom, obstacles, 180)
     down_collided = get_phantom_collision(phantom, obstacles, 270)
 
-    if phantom["x"] < dest_x and not right_collided:
-        phantom["x"] += phantom["speed"]
-    elif phantom["x"] > dest_x and not left_collided:
-        phantom["x"] -= phantom["speed"]
-    elif phantom["y"] < dest_y and not down_collided:
-        phantom["y"] += phantom["speed"]
-    elif phantom["y"] > dest_y and not up_collided:
-        phantom["y"] -= phantom["speed"]
+    if phantom["priority"] == "x":
+        if phantom["x"] < dest_x and not right_collided:
+            phantom["x"] += phantom["speed"]
+        elif phantom["x"] > dest_x and not left_collided:
+            phantom["x"] -= phantom["speed"]
+        elif phantom["y"] < dest_y and not down_collided:
+            phantom["y"] += phantom["speed"]
+        elif phantom["y"] > dest_y and not up_collided:
+            phantom["y"] -= phantom["speed"]
+        else:
+            phantom["priority"] = "y"
+    else:
+        if phantom["y"] > dest_y and not up_collided:
+            phantom["y"] -= phantom["speed"]
+        elif phantom["y"] < dest_y and not down_collided:
+            phantom["y"] += phantom["speed"]
+        elif phantom["x"] > dest_x and not left_collided:
+            phantom["x"] -= phantom["speed"]
+        elif phantom["x"] < dest_x and not right_collided:
+            phantom["x"] += phantom["speed"]
+        else:
+            phantom["priority"] = "x"
 
     return phantom
