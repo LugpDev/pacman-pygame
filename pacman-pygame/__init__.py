@@ -6,7 +6,7 @@ from pacman.draw_pacman import *
 from pacman.handle_pacman_input import *
 from pacman.update_pacman import *
 
-from phantoms import create_phantoms, update_phantom
+from phantoms import create_phantoms, update_phantom, check_pacman_collision
 
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
@@ -49,6 +49,8 @@ while True:
     for phantom in phantoms:
         screen.blit(phantom["sprite"], (phantom["x"], phantom["y"]))
         update_phantom(phantom, (pacman["x"], pacman["y"]), obstacles, playing)
+        collided = check_pacman_collision(phantom, pacman)
+        print(collided)
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)

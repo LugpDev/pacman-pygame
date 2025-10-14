@@ -20,36 +20,45 @@ def create_phantoms(speed):
             "speed": speed,
             "priority": "x"
         },
-        {
-            "name": "red",
-            "sprite": load_sprite("red"),
-            "x": 370,
-            "y": 270,
-            "speed": speed,
-            "priority": "y"
-        },
-        {
-            "name": "pink",
-            "sprite": load_sprite("pink"),
-            "x": 70,
-            "y": 350,
-            "speed": speed,
-            "priority": "y"
-        },
-        {
-            "name": "blue",
-            "sprite": load_sprite("blue"),
-            "x": 600,
-            "y": 350,
-            "speed": speed,
-            "priority": "x"
-        }
+        # {
+        #     "name": "red",
+        #     "sprite": load_sprite("red"),
+        #     "x": 370,
+        #     "y": 270,
+        #     "speed": speed,
+        #     "priority": "y"
+        # },
+        # {
+        #     "name": "pink",
+        #     "sprite": load_sprite("pink"),
+        #     "x": 70,
+        #     "y": 350,
+        #     "speed": speed,
+        #     "priority": "y"
+        # },
+        # {
+        #     "name": "blue",
+        #     "sprite": load_sprite("blue"),
+        #     "x": 600,
+        #     "y": 350,
+        #     "speed": speed,
+        #     "priority": "x"
+        # }
     ]
 
 
 def get_phantom_collision(phantom, obstacles, angle):
     collided = check_collision(obstacles, WIDTH, HEIGHT, phantom["x"], phantom["y"], phantom["speed"], angle)
     return collided
+
+
+def check_pacman_collision(phantom, pacman):
+    pacman_rect = (pacman["x"], pacman["y"], 30, 30)
+    angles = [0, 90, 180, 270]
+    return any(
+        check_collision([pacman_rect], WIDTH, HEIGHT, phantom["x"], phantom["y"], 0, angle)
+        for angle in angles
+    )
 
 
 def update_phantom(phantom, dest, obstacles, playing):
