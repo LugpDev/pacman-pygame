@@ -1,5 +1,7 @@
 from pygame import *
 
+from scripts.check_collision import check_collision
+
 SIZE = 30
 SPEED = 5
 
@@ -52,13 +54,13 @@ def power_collision(powers, pacman_x, pacman_y):
 def use_power(powers, pacman):
     if powers["has_power"] and not powers["shell_data"]["active"]:
         powers["shell_data"]["active"] = True
-        powers["shell_data"]["x"] = pacman["x"] - 5
-        powers["shell_data"]["y"] = pacman["y"] - 10
+        powers["shell_data"]["x"] = pacman["x"]
+        powers["shell_data"]["y"] = pacman["y"]
         powers["shell_data"]["angle"] = pacman["angle"]
         powers["has_power"] = False
 
 
-def update_shell(powers, screen):
+def update_shell(powers, obstacles, screen):
     if not powers["shell_data"]["active"]:
         return
 
@@ -66,13 +68,17 @@ def update_shell(powers, screen):
     y = powers["shell_data"]["y"]
     angle = powers["shell_data"]["angle"]
 
-    if angle == 0:
-        powers["shell_data"]["x"] += SPEED
-    elif angle == 90:
-        powers["shell_data"]["y"] -= SPEED
-    elif angle == 180:
-        powers["shell_data"]["x"] -= SPEED
+    collided = check_collision(obstacles, SIZE, SIZE, x, y, SPEED,
+                               angle)
+    if collided:
+        powers["shell_data"]["active"] = False
     else:
-        powers["shell_data"]["y"] += SPEED
-
-    screen.blit(transform.scale(powers["shell"], (40, 42)), (x, y))
+        if angle == 0:
+            powers["shell_data"]["x"] += SPEED
+        elif angle == 90:
+            powers["shell_data"]["y"] -= SPEED
+        elif angle == 180:
+            powers["shell_data"]["x"] -= SPEED
+        else:
+            powers["shell_data"]["y"] += SPEED
+        screen.blit(transform.scale(powers["shell"], (SIZE, SIZE)), (x, y))
