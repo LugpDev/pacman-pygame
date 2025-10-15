@@ -20,30 +20,30 @@ def create_phantoms(speed):
             "speed": speed,
             "priority": "x"
         },
-        # {
-        #     "name": "red",
-        #     "sprite": load_sprite("red"),
-        #     "x": 370,
-        #     "y": 270,
-        #     "speed": speed,
-        #     "priority": "y"
-        # },
-        # {
-        #     "name": "pink",
-        #     "sprite": load_sprite("pink"),
-        #     "x": 70,
-        #     "y": 350,
-        #     "speed": speed,
-        #     "priority": "y"
-        # },
-        # {
-        #     "name": "blue",
-        #     "sprite": load_sprite("blue"),
-        #     "x": 600,
-        #     "y": 350,
-        #     "speed": speed,
-        #     "priority": "x"
-        # }
+        {
+            "name": "red",
+            "sprite": load_sprite("red"),
+            "x": 370,
+            "y": 270,
+            "speed": speed,
+            "priority": "y"
+        },
+        {
+            "name": "pink",
+            "sprite": load_sprite("pink"),
+            "x": 70,
+            "y": 350,
+            "speed": speed,
+            "priority": "y"
+        },
+        {
+            "name": "blue",
+            "sprite": load_sprite("blue"),
+            "x": 600,
+            "y": 350,
+            "speed": speed,
+            "priority": "x"
+        }
     ]
 
 

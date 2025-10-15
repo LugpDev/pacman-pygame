@@ -23,6 +23,7 @@ pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
 phantoms = create_phantoms(speed=1)
 
 playing = False
+lost = False
 
 while True:
     screen.fill((0, 0, 0))
@@ -36,7 +37,7 @@ while True:
                 if e.key == K_e:
                     use_power(powers, pacman)
 
-            elif e.key == K_SPACE:
+            elif not lost and e.key == K_SPACE:
                 playing = True
 
     map = transform.scale(image.load("../assets/map.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -50,14 +51,17 @@ while True:
         screen.blit(phantom["sprite"], (phantom["x"], phantom["y"]))
         update_phantom(phantom, (pacman["x"], pacman["y"]), obstacles, playing)
         collided = check_pacman_collision(phantom, pacman)
-        print(collided)
+
+        if collided:
+            playing = False
+            lost = True
 
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
 
     update_shell(powers, screen)
 
-    ui_controller(ui_font, screen, playing)
+    ui_controller(ui_font, screen, playing, lost)
     show_power_ui(screen, powers)
 
     display.flip()
