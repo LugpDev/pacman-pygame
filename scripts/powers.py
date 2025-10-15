@@ -60,9 +60,9 @@ def use_power(powers, pacman):
         powers["has_power"] = False
 
 
-def update_shell(powers, obstacles, screen):
+def update_shell(powers, phantoms, obstacles, screen):
     if not powers["shell_data"]["active"]:
-        return
+        return phantoms
 
     x = powers["shell_data"]["x"]
     y = powers["shell_data"]["y"]
@@ -70,9 +70,18 @@ def update_shell(powers, obstacles, screen):
 
     collided = check_collision(obstacles, SIZE, SIZE, x, y, SPEED, angle)
 
-    print(x, y)
+    phantoms_obstacles = []
+    for phantom in phantoms:
+        phantoms_obstacles.append((phantom["x"], phantom["y"], phantom["width"], phantom["height"]))
+
+    phantom_collided = check_collision(phantoms_obstacles, SIZE, SIZE, x, y, SPEED, angle)
 
     if collided:
+        powers["shell_data"]["active"] = False
+    elif phantom_collided:
+        for phantom in phantoms:
+            if phantom["x"] == phantom_collided[0] and phantom["y"] == phantom_collided[1]:
+                phantoms.remove(phantom)
         powers["shell_data"]["active"] = False
     else:
         if angle == 0:
@@ -90,3 +99,5 @@ def update_shell(powers, obstacles, screen):
         else:
             powers["shell_data"]["y"] += SPEED
         screen.blit(transform.scale(powers["shell"], (SIZE, SIZE)), (x, y))
+
+    return phantoms

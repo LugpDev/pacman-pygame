@@ -18,7 +18,9 @@ def create_phantoms(speed):
             "x": 295,
             "y": 270,
             "speed": speed,
-            "priority": "x"
+            "priority": "x",
+            "width": WIDTH,
+            "height": HEIGHT,
         },
         {
             "name": "red",
@@ -26,7 +28,9 @@ def create_phantoms(speed):
             "x": 370,
             "y": 270,
             "speed": speed,
-            "priority": "y"
+            "priority": "y",
+            "width": WIDTH,
+            "height": HEIGHT,
         },
         {
             "name": "pink",
@@ -34,7 +38,9 @@ def create_phantoms(speed):
             "x": 70,
             "y": 350,
             "speed": speed,
-            "priority": "y"
+            "priority": "y",
+            "width": WIDTH,
+            "height": HEIGHT,
         },
         {
             "name": "blue",
@@ -42,7 +48,9 @@ def create_phantoms(speed):
             "x": 600,
             "y": 350,
             "speed": speed,
-            "priority": "x"
+            "priority": "x",
+            "width": WIDTH,
+            "height": HEIGHT,
         }
     ]
 

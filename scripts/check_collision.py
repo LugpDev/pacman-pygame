@@ -16,5 +16,5 @@ def check_collision(obstacles, width, height, x, y, speed, angle):
             continue
 
         if collided_y and collided_x:
-            return True
+            return obstacle
     return False

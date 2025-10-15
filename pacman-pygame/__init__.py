@@ -59,7 +59,7 @@ while True:
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
 
-    update_shell(powers, obstacles, screen)
+    phantoms = update_shell(powers, phantoms, obstacles, screen)
 
     ui_controller(ui_font, screen, playing, lost)
     show_power_ui(screen, powers)
