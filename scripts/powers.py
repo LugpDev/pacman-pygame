@@ -68,17 +68,25 @@ def update_shell(powers, obstacles, screen):
     y = powers["shell_data"]["y"]
     angle = powers["shell_data"]["angle"]
 
-    collided = check_collision(obstacles, SIZE, SIZE, x, y, SPEED,
-                               angle)
+    collided = check_collision(obstacles, SIZE, SIZE, x, y, SPEED, angle)
+
+    print(x, y)
+
     if collided:
         powers["shell_data"]["active"] = False
     else:
         if angle == 0:
             powers["shell_data"]["x"] += SPEED
+
+            if x >= 800:
+                powers["shell_data"]["x"] = 0
         elif angle == 90:
             powers["shell_data"]["y"] -= SPEED
         elif angle == 180:
             powers["shell_data"]["x"] -= SPEED
+
+            if x <= 0:
+                powers["shell_data"]["x"] = 700
         else:
             powers["shell_data"]["y"] += SPEED
         screen.blit(transform.scale(powers["shell"], (SIZE, SIZE)), (x, y))
