@@ -1,3 +1,4 @@
+import pygame.mixer
 from pygame import *
 import sys
 
@@ -22,8 +23,16 @@ powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT)
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
 phantoms = create_phantoms(speed=1)
 
+background_music = pygame.mixer.Sound("../assets/audio/background_music.mp3")
+ghost_siren = pygame.mixer.Sound("../assets/audio/ghost_siren.mp3")
+background_music.set_volume(0.5)
+ghost_siren.set_volume(0.5)
+ghost_channel = pygame.mixer.Channel(1)
+
 playing = False
 lost = False
+
+background_music.play()
 
 while True:
     screen.fill((0, 0, 0))
@@ -63,6 +72,13 @@ while True:
 
     ui_controller(ui_font, screen, playing, lost)
     show_power_ui(screen, powers)
+
+    if playing:
+        if not ghost_channel.get_busy():
+            ghost_channel.play(ghost_siren, loops=-1)
+            ghost_channel.set_volume(0.5)
+    else:
+        ghost_channel.stop()
 
     display.flip()
     clock.tick(60)

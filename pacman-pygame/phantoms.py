@@ -56,7 +56,7 @@ def create_phantoms(speed):
             "name": "purple",
             "sprite": load_sprite("purple"),
             "x": 520,
-            "y": 650,
+            "y": 730,
             "speed": speed,
             "priority": "y",
             "width": WIDTH,
