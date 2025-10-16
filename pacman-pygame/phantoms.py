@@ -23,8 +23,8 @@ def create_phantoms(speed):
             "height": HEIGHT,
         },
         {
-            "name": "red",
-            "sprite": load_sprite("red"),
+            "name": "green",
+            "sprite": load_sprite("green"),
             "x": 370,
             "y": 270,
             "speed": speed,
@@ -51,7 +51,27 @@ def create_phantoms(speed):
             "priority": "x",
             "width": WIDTH,
             "height": HEIGHT,
-        }
+        },
+        {
+            "name": "purple",
+            "sprite": load_sprite("purple"),
+            "x": 520,
+            "y": 650,
+            "speed": speed,
+            "priority": "y",
+            "width": WIDTH,
+            "height": HEIGHT,
+        },
+        {
+            "name": "red",
+            "sprite": load_sprite("red"),
+            "x": 140,
+            "y": 650,
+            "speed": speed,
+            "priority": "x",
+            "width": WIDTH,
+            "height": HEIGHT,
+        },
     ]
 
 
