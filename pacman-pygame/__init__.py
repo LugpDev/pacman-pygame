@@ -28,6 +28,8 @@ ghost_channel = sound_controller["ghost_channel"]
 ghost_siren = sound_controller["ghost_siren"]
 lose_channel = sound_controller["lose_channel"]
 lose_sound = sound_controller["lose_sound"]
+powerup_channel = sound_controller["powerup_channel"]
+powerup_sound = sound_controller["powerup_sound"]
 
 playing = False
 lost = False
@@ -55,7 +57,7 @@ while True:
 
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
-        power_collision(powers, pacman["x"], pacman["y"])
+        power_collision(powers, pacman["x"], pacman["y"], powerup_channel, powerup_sound)
 
     for phantom in phantoms:
         screen.blit(phantom["sprite"], (phantom["x"], phantom["y"]))

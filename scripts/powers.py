@@ -6,8 +6,6 @@ SIZE = 30
 SPEED = 5
 
 mixer.init()
-powerup = mixer.Sound("../assets/audio/powerup.mp3")
-powerup_channel = mixer.Channel(3)
 
 
 def initialize_powers(screen_width, screen_height):
@@ -45,7 +43,7 @@ def initialize_powers(screen_width, screen_height):
     }
 
 
-def power_collision(powers, pacman_x, pacman_y):
+def power_collision(powers, pacman_x, pacman_y, audio_channel, sound):
     for power in powers["items"]:
         x = power["x"]
         y = power["y"]
@@ -54,7 +52,7 @@ def power_collision(powers, pacman_x, pacman_y):
         y_collided = pacman_y in range(y - SIZE, y + SIZE)
 
         if not powers["has_power"] and x_collided and y_collided:
-            powerup_channel.play(powerup)
+            audio_channel.play(sound)
             powers["items"].remove(power)
             powers["has_power"] = True
 
