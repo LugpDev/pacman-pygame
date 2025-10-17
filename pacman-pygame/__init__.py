@@ -29,6 +29,7 @@ background_music.set_volume(0.5)
 ghost_siren.set_volume(0.5)
 lose_sound.set_volume(0.5)
 ghost_channel = mixer.Channel(1)
+lose_channel = mixer.Channel(2)
 
 playing = False
 lost = False
@@ -84,7 +85,7 @@ while True:
 
         if lost and not lose_played:
             lose_played = True
-            lose_sound.play()
+            lose_channel.play(lose_sound)
 
     display.flip()
     clock.tick(60)
