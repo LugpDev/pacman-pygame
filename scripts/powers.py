@@ -8,7 +8,7 @@ SPEED = 5
 mixer.init()
 
 
-def initialize_powers(screen_width, screen_height):
+def initialize_powers(screen_width, screen_height, powerup_channel, powerup_sound, hit_channel, hit_sound):
     sprite = transform.scale(image.load('../assets/lucky-block.jpg'), (SIZE, SIZE))
     shell = image.load('../assets/shell.png')
 
@@ -16,6 +16,10 @@ def initialize_powers(screen_width, screen_height):
         "image": sprite,
         "shell": shell,
         "has_power": False,
+        "powerup_channel": powerup_channel,
+        "powerup_sound": powerup_sound,
+        "hit_channel": hit_channel,
+        "hit_sound": hit_sound,
         "shell_data": {
             "active": False,
             "x": -1,
@@ -43,7 +47,7 @@ def initialize_powers(screen_width, screen_height):
     }
 
 
-def power_collision(powers, pacman_x, pacman_y, audio_channel, sound):
+def power_collision(powers, pacman_x, pacman_y):
     for power in powers["items"]:
         x = power["x"]
         y = power["y"]
@@ -52,6 +56,8 @@ def power_collision(powers, pacman_x, pacman_y, audio_channel, sound):
         y_collided = pacman_y in range(y - SIZE, y + SIZE)
 
         if not powers["has_power"] and x_collided and y_collided:
+            audio_channel = powers["powerup_channel"]
+            sound = powers["powerup_sound"]
             audio_channel.play(sound)
             powers["items"].remove(power)
             powers["has_power"] = True
@@ -88,6 +94,9 @@ def update_shell(powers, phantoms, obstacles, screen):
         for phantom in phantoms:
             if phantom["x"] == phantom_collided[0] and phantom["y"] == phantom_collided[1]:
                 phantoms.remove(phantom)
+        channel = powers["hit_channel"]
+        sound = powers["hit_sound"]
+        channel.play(sound)
         powers["shell_data"]["active"] = False
     else:
         if angle == 0:

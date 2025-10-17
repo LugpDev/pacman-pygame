@@ -14,14 +14,6 @@ from scripts.sound import initialize_sound, play_start_music
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
 
 init()
-SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
-screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-clock = time.Clock()
-ui_font = initialize_ui()
-obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
-powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT)
-pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
-phantoms = create_phantoms(speed=1)
 
 sound_controller = initialize_sound()
 ghost_channel = sound_controller["ghost_channel"]
@@ -30,6 +22,17 @@ lose_channel = sound_controller["lose_channel"]
 lose_sound = sound_controller["lose_sound"]
 powerup_channel = sound_controller["powerup_channel"]
 powerup_sound = sound_controller["powerup_sound"]
+hit_channel = sound_controller["hit_channel"]
+hit_sound = sound_controller["hit_sound"]
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
+screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+clock = time.Clock()
+ui_font = initialize_ui()
+obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
+powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT, powerup_channel, powerup_sound, hit_channel, hit_sound)
+pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
+phantoms = create_phantoms(speed=1)
 
 playing = False
 lost = False
@@ -57,7 +60,7 @@ while True:
 
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
-        power_collision(powers, pacman["x"], pacman["y"], powerup_channel, powerup_sound)
+        power_collision(powers, pacman["x"], pacman["y"])
 
     for phantom in phantoms:
         screen.blit(phantom["sprite"], (phantom["x"], phantom["y"]))

@@ -13,6 +13,9 @@ def initialize_sound():
     powerup_sound = mixer.Sound("../assets/audio/powerup.mp3")
     powerup_channel = mixer.Channel(3)
 
+    hit_sound = mixer.Sound("../assets/audio/hit.mp3")
+    hit_channel = mixer.Channel(4)
+
     return {
         "ghost_siren": ghost_siren,
         "ghost_channel": ghost_channel,
@@ -20,6 +23,8 @@ def initialize_sound():
         "lose_channel": lose_channel,
         "powerup_sound": powerup_sound,
         "powerup_channel": powerup_channel,
+        "hit_sound": hit_sound,
+        "hit_channel": hit_channel,
     }
 
 
