@@ -10,6 +10,7 @@ from phantoms import create_phantoms, update_phantom, check_pacman_collision
 
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
+from scripts.sound import initialize_sound, play_start_music
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
 
 init()
@@ -22,20 +23,17 @@ powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT)
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
 phantoms = create_phantoms(speed=1)
 
-background_music = mixer.Sound("../assets/audio/background_music.mp3")
-ghost_siren = mixer.Sound("../assets/audio/ghost_siren.mp3")
-lose_sound = mixer.Sound("../assets/audio/lose.mp3")
-background_music.set_volume(0.5)
-ghost_siren.set_volume(0.5)
-lose_sound.set_volume(0.5)
-ghost_channel = mixer.Channel(1)
-lose_channel = mixer.Channel(2)
+sound_controller = initialize_sound()
+ghost_channel = sound_controller["ghost_channel"]
+ghost_siren = sound_controller["ghost_siren"]
+lose_channel = sound_controller["lose_channel"]
+lose_sound = sound_controller["lose_sound"]
 
 playing = False
 lost = False
 lose_played = False
 
-background_music.play()
+play_start_music()
 
 while True:
     screen.fill((0, 0, 0))
@@ -79,7 +77,6 @@ while True:
     if playing:
         if not ghost_channel.get_busy():
             ghost_channel.play(ghost_siren, loops=-1)
-            ghost_channel.set_volume(0.5)
     else:
         ghost_channel.stop()
 
