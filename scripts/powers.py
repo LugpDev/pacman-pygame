@@ -5,6 +5,10 @@ from scripts.check_collision import check_collision
 SIZE = 30
 SPEED = 5
 
+mixer.init()
+powerup = mixer.Sound("../assets/audio/powerup.mp3")
+powerup_channel = mixer.Channel(3)
+
 
 def initialize_powers(screen_width, screen_height):
     sprite = transform.scale(image.load('../assets/lucky-block.jpg'), (SIZE, SIZE))
@@ -46,7 +50,11 @@ def power_collision(powers, pacman_x, pacman_y):
         x = power["x"]
         y = power["y"]
 
-        if pacman_x in range(x - SIZE, x + SIZE) and pacman_y in range(y - SIZE, y + SIZE):
+        x_collided = pacman_x in range(x - SIZE, x + SIZE)
+        y_collided = pacman_y in range(y - SIZE, y + SIZE)
+
+        if not powers["has_power"] and x_collided and y_collided:
+            powerup_channel.play(powerup)
             powers["items"].remove(power)
             powers["has_power"] = True
 
