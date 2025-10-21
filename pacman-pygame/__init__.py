@@ -13,7 +13,6 @@ from scripts.powers import initialize_powers, power_collision, use_power, update
 from scripts.sound import initialize_sound, play_start_music
 from scripts.ui import initialize_ui, ui_controller, show_power_ui
 
-# --- Inicialización base ---
 init()
 
 sound_controller = initialize_sound()
@@ -184,12 +183,11 @@ for start_x, end_x, y in horizontal:
     x = start_x
     while x < end_x:
         pellets.append({"x": x, "y": y})
-        x += 39  # paso
+        x += 39
 
 score = 0
 game_over = False
 
-# --- Bucle principal ---
 while True:
     screen.fill((0, 0, 0))
     for e in event.get():
@@ -206,15 +204,12 @@ while True:
     map = transform.scale(image.load("../assets/map.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(map, (0, 0))
 
-    # --- Dibujar pellets ---
     for p in pellets:
         draw.circle(screen, (255, 255, 0), (p["x"], p["y"]), PELLET_RADIUS)
 
-    # --- Comer pellets ---
     if playing and not game_over:
         new_pellets = []
         for p in pellets:
-            # centro de Pac-Man (ajusta si es necesario)
             pac_x = pacman["x"] + 10
             pac_y = pacman["y"] + 10
 
@@ -222,7 +217,7 @@ while True:
             dy = pac_y - p["y"]
             distance = (dx * dx + dy * dy) ** 0.5
 
-            if distance < 20:  # <-- radio de colisión más amplio
+            if distance < 20:
                 score += 1
             else:
                 new_pellets.append(p)
@@ -232,17 +227,9 @@ while True:
             game_over = True
             playing = False
 
-    # score texto
     text = ui_font.render(f"Score: {score}", True, (255, 255, 255))
     screen.blit(text, (10, 10))
 
-    # you win
-    if game_over:
-        msg = ui_font.render("¡Ganaste! 🏆", True, (255, 255, 0))
-        msg_rect = msg.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-        screen.blit(msg, msg_rect)
-
-    # --- Código original ---
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
         power_collision(powers, pacman["x"], pacman["y"])

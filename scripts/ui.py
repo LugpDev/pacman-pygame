@@ -10,7 +10,9 @@ def ui_controller(my_font, screen, playing, lost, game_over):
     if not playing:
         if lost:
             content = "Game Over!"
-        elif not game_over:
+        elif game_over:
+            content = "¡Ganaste! 🏆"
+        else:
             content = "Press space to start playing..."
 
         text = my_font.render(content, True, (255, 255, 255))
