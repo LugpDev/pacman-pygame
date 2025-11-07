@@ -5,6 +5,22 @@ from scripts.check_collision import check_collision
 WIDTH, HEIGHT = 35, 30
 
 
+class Phantom:
+    def __init__(self, name, speed, x, y, priority):
+        self.speed = speed
+        self.x = x
+        self.y = y
+        self.priority = priority
+        self.name = name
+        self.height = HEIGHT
+        self.width = WIDTH
+        self.sprite = self.load_sprite()
+
+    def load_sprite(self):
+        phantom_sprite = transform.scale(image.load(f'../assets/phantoms/{self.name}.png'), (self.width, self.height))
+        return phantom_sprite
+
+
 def load_sprite(name):
     sprite = transform.scale(image.load(f'../assets/phantoms/{name}.png'), (WIDTH, HEIGHT))
     return sprite
