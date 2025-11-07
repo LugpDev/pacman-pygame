@@ -10,20 +10,20 @@ from phantoms import create_phantoms, update_phantom, check_pacman_collision
 
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
-from scripts.sound import initialize_sound, play_start_music
 from models.ui_controller import UIController
+from models.sound_controller import SoundController
 
 init()
 
-sound_controller = initialize_sound()
-ghost_channel = sound_controller["ghost_channel"]
-ghost_siren = sound_controller["ghost_siren"]
-lose_channel = sound_controller["lose_channel"]
-lose_sound = sound_controller["lose_sound"]
-powerup_channel = sound_controller["powerup_channel"]
-powerup_sound = sound_controller["powerup_sound"]
-hit_channel = sound_controller["hit_channel"]
-hit_sound = sound_controller["hit_sound"]
+sound_controller = SoundController()
+ghost_channel = sound_controller.siren_channel
+ghost_siren = sound_controller.siren_sound
+lose_channel = sound_controller.lose_channel
+lose_sound = sound_controller.lose_sound
+powerup_channel = sound_controller.powerup_channel
+powerup_sound = sound_controller.powerup_sound
+hit_channel = sound_controller.hit_channel
+hit_sound = sound_controller.hit_sound
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -38,7 +38,7 @@ playing = False
 lost = False
 lose_played = False
 
-play_start_music()
+sound_controller.play_start_music()
 
 # pellets
 PELLET_RADIUS = 3
@@ -226,7 +226,6 @@ while True:
         if len(pellets) == 0:
             game_over = True
             playing = False
-
 
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
