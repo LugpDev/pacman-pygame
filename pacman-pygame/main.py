@@ -11,7 +11,7 @@ from phantoms import create_phantoms, update_phantom, check_pacman_collision
 from scripts.obstacles import initialize_obstacles
 from scripts.powers import initialize_powers, power_collision, use_power, update_shell
 from scripts.sound import initialize_sound, play_start_music
-from scripts.ui import initialize_ui, ui_controller, show_power_ui
+from models.ui_controller import UIController
 
 init()
 
@@ -28,7 +28,7 @@ hit_sound = sound_controller["hit_sound"]
 SCREEN_WIDTH, SCREEN_HEIGHT = 700, 781
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = time.Clock()
-ui_font = initialize_ui()
+ui_controller = UIController(screen)
 obstacles = initialize_obstacles(SCREEN_WIDTH, SCREEN_HEIGHT)
 powers = initialize_powers(SCREEN_WIDTH, SCREEN_HEIGHT, powerup_channel, powerup_sound, hit_channel, hit_sound)
 pacman = create_pacman(335, 580, 2, SCREEN_WIDTH, SCREEN_HEIGHT, obstacles)
@@ -227,8 +227,6 @@ while True:
             game_over = True
             playing = False
 
-    text = ui_font.render(f"Score: {score}", True, (255, 255, 255))
-    screen.blit(text, (10, 10))
 
     for power in powers["items"]:
         screen.blit(powers["image"], (power["x"], power["y"]))
@@ -245,8 +243,9 @@ while True:
     pacman = update_pacman(pacman, playing)
     draw_pacman(pacman, screen, playing)
     phantoms = update_shell(powers, phantoms, obstacles, screen)
-    ui_controller(ui_font, screen, playing, lost, game_over)
-    show_power_ui(screen, powers)
+    ui_controller.draw_score(score)
+    ui_controller.draw_message_ui(playing, lost, game_over)
+    ui_controller.draw_power_ui(powers["has_power"])
 
     if playing:
         if not ghost_channel.get_busy():

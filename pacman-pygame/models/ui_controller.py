@@ -8,6 +8,10 @@ class UIController:
         self.key_image = transform.scale(image.load("../assets/e_key.png"), (30, 30))
         self.shell_image = transform.scale(image.load("../assets/shell.png"), (40, 42))
 
+    def draw_score(self, score):
+        text = self.font.render(f"Score: {score}", True, (255, 255, 255))
+        self.screen.blit(text, (10, 10))
+
     def draw_power_ui(self, has_power):
         draw.circle(self.screen, (255, 255, 255), (70, 290), 35, 2)
         self.screen.blit(self.key_image, (20, 290 - 15))
@@ -15,12 +19,12 @@ class UIController:
         if has_power:
             self.screen.blit(self.shell_image, (70 - 20, 290 - 21))
 
-    def draw_ui(self, playing, lost, game_over):
+    def draw_message_ui(self, playing, lost, game_over):
         if not playing:
             if lost:
                 content = "Game Over!"
             elif game_over:
-                content = "¡Ganaste! 🏆"
+                content = "¡You win!"
             else:
                 content = "Press space to start playing..."
 
